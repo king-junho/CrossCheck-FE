@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import './Register.css';
-
+import { useNavigate } from 'react-router-dom';
+import '../css/register.css';
+import Chatbot from '../../Chatbot/components/Chatbot.jsx';
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     id: '',
@@ -21,13 +23,16 @@ const Register = () => {
     e.preventDefault();
     // 여기에 회원가입 로직을 구현하세요
     console.log('Register attempt with:', formData);
+    
+    // 회원가입 로직이 성공하면 Chatbot 페이지로 이동
+    navigate('/Chatbot');
   };
 
   return (
     <div className="register-container">
       <div className="logo">Cross Check</div>
       
-      <h1 className="register-title">Register.</h1>
+      <div className="register-title">Register.</div>
       
       <form className="register-form" onSubmit={handleSubmit}>
         <input
@@ -58,15 +63,17 @@ const Register = () => {
         />
         
         <input
-          type="date"
+          type="text"
           name="birthday"
           placeholder="생년월일"
           value={formData.birthday}
           onChange={handleChange}
+          onFocus={(e) => (e.target.type = 'date')}
+          onBlur={(e) => (e.target.type = formData.birthday ? 'date' : 'text')}
           className="input-field"
         />
-        
-        <button type="submit" className="register-button">
+
+        <button type="submit" className="register-register-button">
           회원가입
         </button>
       </form>

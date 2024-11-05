@@ -5,24 +5,39 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background-color: #fff5f7;
+      background-color: #FFF0F5;
     }
     
     .logo {
-      background-color: #ff9eb5;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 15px;
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 40px;
+     
+      background-color: #FF8FAB;
+      width: 237px;
+      height: 51px;
+      border-radius: 20px 20px 20px 0px; /* 좌상, 우상, 우하, 좌하 */
+      color: #FFF;
+      text-align: center;
+      display: flex;          /* 플렉스 박스 사용 */
+      align-items: center;    /* 세로 중앙 정렬 */
+      justify-content: center; /* 가로 중앙 정렬 */
+      font-family: Pretendard;
+      font-size: 30px;
+      font-style: normal;
+      font-weight: 900;
+      line-height: normal;
+      position: absolute; /* 절대 위치로 설정 */
+      top: 24px; /* 위쪽에 위치 */
+      left: 29px; /* 왼쪽에 위치 */
     }
     
     .register-title {
-      font-size: 48px;
-      font-weight: bold;
-      margin-bottom: 40px;
-      color: #333;
+      color: #212529;
+      text-align: center;
+      font-family: Pretendard;
+      font-size: 60px;
+      font-style: normal;
+      font-weight: 900;
+      line-height: normal;
+      margin-bottom: 81px;
     }
     
     .register-form {
@@ -30,12 +45,13 @@
       max-width: 400px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 30px;
+      margin-left: 60px;
     }
     
     .input-field {
-      width: 100%;
-      padding: 15px;
+      width: 322px;
+      height: 24px;
       border: 2px solid #e2e8f0;
       border-radius: 10px;
       font-size: 16px;
@@ -59,8 +75,8 @@
       cursor: pointer;
     }
     
-    .register-button {
-      width: 100%;
+    .register-register-button {
+      width: 356px;
       padding: 15px;
       border: none;
       border-radius: 10px;
@@ -70,10 +86,11 @@
       font-weight: bold;
       cursor: pointer;
       transition: opacity 0.2s;
-      margin-top: 10px;
+      margin-top: 30px;
+      
     }
     
-    .register-button:hover {
+    .register-register-button:hover {
       opacity: 0.8;
     }
     

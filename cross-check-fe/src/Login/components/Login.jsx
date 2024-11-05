@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import './Login.css';
+import { useNavigate } from 'react-router-dom';
+import '../css/login.css';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     id: '',
     password: ''
@@ -21,11 +23,15 @@ const Login = () => {
     console.log('Login attempt with:', formData);
   };
 
+  const handleRegister = () => {
+    navigate('/Register'); // Register 페이지로 이동
+  };
+
   return (
     <div className="login-container">
       <div className="logo">Cross Check</div>
       
-      <h1 className="login-title">Login.</h1>
+      <div className="login-title">Login.</div>
       
       <form className="login-form" onSubmit={handleSubmit}>
         <input
@@ -48,7 +54,7 @@ const Login = () => {
         
         <div className="button-group">
           <button type="submit" className="login-button">Login</button>
-          <button type="button" className="register-button">Register</button>
+          <button type="button" className="login-register-button" onClick={handleRegister}>Register</button>
         </div>
       </form>
     </div>
