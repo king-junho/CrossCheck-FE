@@ -69,3 +69,32 @@
     .icon {
       margin-right: 12px;
     }
+
+    .menu-item {
+      padding: 12px;
+      margin: 4px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      color: #4A4A4A;
+      transition: all 0.2s ease;
+    }
+    
+    .menu-item:hover {
+      background-color: #FFE4E1;
+    }
+    
+    .menu-item.active {
+      background-color: #FFB6C1;
+      color: white;
+      font-weight: 500;
+    }
+    
+    .menu-item.active:hover {
+      background-color: #FFB6C1;
+    }
+    
+    .icon {
+      margin-right: 12px;
+    }
