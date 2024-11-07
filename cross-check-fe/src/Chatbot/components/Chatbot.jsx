@@ -1,20 +1,11 @@
 import React from 'react';
+import Sidebar from '../../Sidebar/components/Sidebar';
 import '../css/chatbot.css';
+
 function Chatbot() {
   return (
     <div className="chatbot-container">
-      <aside className="sidebar">
-        <h2>Cross Check</h2>
-        <button className="start-chat">+ Start a new chat</button>
-        <nav>
-          <ul>
-            <li>Chat Bot</li>
-            <li>History</li>
-            <li>Legal Brokerage Service</li>
-            <li>Community</li>
-          </ul>
-        </nav>
-      </aside>
+      <Sidebar />
       <main className="chat-area">
         <div className="chat-messages">
           <div className="chat-bubble bot">
