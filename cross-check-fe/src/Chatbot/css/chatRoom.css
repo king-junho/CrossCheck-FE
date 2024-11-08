@@ -1,0 +1,113 @@
+/* src/Chatbot/css/chatRoom.css */
+.chat-room {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background-color: white;
+    }
+    
+    .chat-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .message {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      max-width: 100%;
+    }
+    
+    .message.user {
+      justify-content: flex-end;
+    }
+    
+    .bot-icon {
+      width: 32px;
+      height: 32px;
+      background-color: #FFB6C1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 8px;
+    }
+    
+    .message-container {
+      display: flex;
+      flex-direction: column;
+      max-width: 60%;
+    }
+    
+    .message-content {
+      background-color: #FFE4E1;
+      padding: 15px 20px;
+      border-radius: 15px;
+      font-size: 16px;
+      color: #000;
+      word-break: break-word;
+    }
+    
+    .message.user .message-content {
+      background-color: #FFB6C1;
+      color: white;
+    }
+    
+    .options-container {
+      display: flex;
+      gap: 10px;
+      margin-top: 5px;
+      background-color: #FFB6C1;
+      padding: 15px 20px;
+      border-radius: 15px;
+    }
+    
+    .option-button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 0;
+    }
+    
+    .option-button:hover {
+      opacity: 0.8;
+    }
+    
+    .chat-input-wrapper {
+      border-top: 1px solid #FFE4E1;
+      padding: 20px;
+      background-color: white;
+    }
+    
+    .chat-input-container {
+      display: flex;
+      gap: 10px;
+      max-width: 100%;
+    }
+    
+    .chat-input {
+      flex: 1;
+      padding: 15px;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+    }
+    
+    .send-button {
+      width: 40px;
+      height: 40px;
+      background-color: #FFB6C1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }

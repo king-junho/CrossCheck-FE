@@ -1,66 +1,12 @@
+/* src/Chatbot/css/chatbot.css */
 .chatbot-container {
+      position: fixed;
+      top: 0;
+      left: 300px; /* Sidebar width */
+      right: 0;
+      bottom: 0;
+      background-color: white;
       display: flex;
-      height: 100vh;
-    }
-    
-    .chat-area {
-      flex: 1;
-      margin-left: 260px; /* sidebar width */
-      display: flex;
-      flex-direction: column;
-      background-color: #fff;
-    }
-    
-    .chat-messages {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
-    }
-    
-    .chat-bubble {
-      max-width: 70%;
-      margin: 10px 0;
-      padding: 15px;
-      border-radius: 10px;
-    }
-    
-    .chat-bubble.bot {
-      background-color: #FFE4E1;
-      margin-right: auto;
-    }
-    
-    .chat-bubble.user {
-      background-color: #FFB6C1;
-      margin-left: auto;
-      color: white;
-    }
-    
-    .chat-input {
-      padding: 20px;
-      display: flex;
-      gap: 10px;
-      background-color: #fff;
-      border-top: 1px solid #FFE4E1;
-    }
-    
-    .chat-input input {
-      flex: 1;
-      padding: 12px;
-      border: 1px solid #FFE4E1;
-      border-radius: 8px;
-      outline: none;
-    }
-    
-    .chat-input button {
-      padding: 12px 24px;
-      background-color: #FFB6C1;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    
-    .chat-input button:hover {
-      background-color: #FF69B4;
+      justify-content: center;
+      align-items: center;
     }

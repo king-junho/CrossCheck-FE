@@ -1,39 +1,69 @@
+// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Sidebar from './Sidebar/components/Sidebar';
+import Login from './Login/components/Login';
+import Register from './Register/components/Register';
+import Chatbot from './Chatbot/components/Chatbot';
+import Community from './Community/components/Community';
+import History from './History/components/History';
+import LegalService from './LegalService/components/LegalService';
+import './App.css';
 
-import Login from '../src/Login/components/Login.jsx';
-import Register from '../src/Register/components/Register.jsx';
-import Community from '../src/Community/components/Community.jsx';
-import LegalService from '../src/LegalService/components/LegalService.jsx';
-import Chatbot from '../src/Chatbot/components/Chatbot.jsx';
-import History from '../src/History/components/History.jsx';
+const AppLayout = ({ children }) => {
+      return (
+            <div className="app">
+                  <Sidebar />
+                  {children}
+            </div>
+      );
+};
+
 const App = () => {
-  return (
-      <Router>
-        <Routes>
-          {/* 기본 라우트 */}
-          <Route path="/" element={<Login />} />
-          <Route path="/Login" element={<Login />} />
-          
+      return (
+            <Router>
+                  <Routes>
+                        {/* Public routes */}
+                        <Route path="/" element={<Login />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
 
-          {/* Register 관련 라우트 */}
-           <Route path="/Register" element={<Register />} /> 
-        
-          {/* History 관련 라우트 */}
-          {/* <Route path="/History" element={<History />} /> */}
-
-          {/* Community 관련 라우트 */}
-          {/* <Route path="/Community" element={<Community />} /> */}
-
-          {/* LegalService 관련 라우트 */}
-          {/* <Route path="/LegalService" element={<LegalService />} /> */}
-                            
-          {/* Chatbot 관련 라우트 */}
-          <Route path="/Chatbot" element={<Chatbot />} />
-           
-        </Routes>
-      </Router>
-  );
+                        {/* Protected routes with Sidebar */}
+                        <Route
+                              path="/chatbot"
+                              element={
+                                    <AppLayout>
+                                          <Chatbot />
+                                    </AppLayout>
+                              }
+                        />
+                        <Route
+                              path="/community"
+                              element={
+                                    <AppLayout>
+                                          <Community />
+                                    </AppLayout>
+                              }
+                        />
+                        <Route
+                              path="/history"
+                              element={
+                                    <AppLayout>
+                                          <History />
+                                    </AppLayout>
+                              }
+                        />
+                        <Route
+                              path="/legal-service"
+                              element={
+                                    <AppLayout>
+                                          <LegalService />
+                                    </AppLayout>
+                              }
+                        />
+                  </Routes>
+            </Router>
+      );
 };
 
 export default App;
