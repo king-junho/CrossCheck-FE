@@ -1,5 +1,4 @@
 // src/Chatbot/components/ChatRoom.jsx
-// src/Chatbot/components/ChatRoom.jsx
 import React, { useState, useRef, useEffect } from 'react';
 import '../css/chatRoom.css';
 
@@ -28,8 +27,35 @@ const ChatRoom = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!input.trim()) return;
-    setMessages(prev => [...prev, { type: 'user', content: input }]);
+    
+    // 사용자 메시지 추가
+    setMessages(prev => [...prev, { type: 'user', content: input, align: 'right' }]);
     setInput('');
+
+    // 챗봇 응답 시뮬레이션
+    if (input === '서울특별시 삼선교로 8길 21 101호') {
+      setTimeout(() => {
+        setMessages(prev => [...prev, { 
+          type: 'bot', 
+          content: '집주인의 성함과 주민등록번호를 입력해주세요.',
+          align: 'left'
+        }]);
+      }, 1000);
+    }
+  };
+
+  const handleOptionClick = (option) => {
+    // 선택된 옵션을 사용자 메시지로 추가
+    setMessages(prev => [...prev, { type: 'user', content: option, align: 'right' }]);
+
+    if (option === '전세상담') {
+      setTimeout(() => {
+        setMessages(prev => [...prev, 
+          { type: 'bot', content: '전세상담을 시작하겠습니다.', align: 'left' },
+          { type: 'bot', content: '전체 과정을 안내하고 전세 사기의 위험에 함께 점근할 수 있도록 도와드리겠습니다.\n문서에 있는 정보가 이미 알고 있는 내용과 일치하는지 확인하는 것부터 시작하겠습니다.\n임대하려는 부동산의 실체 주소를 입력해주세요.', align: 'left' }
+        ]);
+      }, 1000);
+    }
   };
 
   return (
@@ -39,43 +65,44 @@ const ChatRoom = () => {
           <div key={index} className={`message ${message.type}`}>
             {message.type === 'bot' && (
               <div className="bot-icon">
-                <img src="/chatbot-icon.png" alt="Bot" width="20" height="20" />
+                <img src="./chatbot-icon.png" alt="Bot" width="22" height="19" />
               </div>
             )}
-            <div className="message-container">
-              {message.content && (
-                <div className="message-content">
-                  {message.content}
-                </div>
-              )}
-              {message.options && (
+            <div className="message-content">
+              {message.content ? (
+                message.content.split('\n').map((line, i) => (
+                  <p key={i}>{line}</p>
+                ))
+              ) : message.options ? (
                 <div className="options-container">
                   {message.options.map((option, idx) => (
-                    <button key={idx} className="option-button">
+                    <button 
+                      key={idx} 
+                      className="option-button"
+                      onClick={() => handleOptionClick(option)}
+                    >
                       {option}
                     </button>
                   ))}
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
         ))}
         <div ref={messagesEndRef} />
       </div>
-      <div className="chat-input-wrapper">
-        <form className="chat-input-container" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type the words..."
-            className="chat-input"
-          />
-          <button type="submit" className="send-button">
-            ▶
-          </button>
-        </form>
-      </div>
+      <form className="chat-input-container" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Type the words..."
+          className="chat-input"
+        />
+        <button type="submit" className="send-button">
+          ▶
+        </button>
+      </form>
     </div>
   );
 };
