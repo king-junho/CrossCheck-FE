@@ -30,13 +30,46 @@ const ChatRoom = () => {
             scrollToBottom();
       }, [messages]);
 
-      const handleSubmit = (e) => {
-            e.preventDefault();
-            if (!input.trim()) return;
+      // 파일을 Base64로 변환하는 함수
+      const convertFileToBase64 = (file) => {
+            return new Promise((resolve, reject) => {
+                  const reader = new FileReader();
+                  reader.readAsDataURL(file);
+                  reader.onload = () => resolve(reader.result);
+                  reader.onerror = (error) => reject(error);
+            });
+      };
 
-            // 사용자 메시지 추가
-            setMessages(prev => [...prev, { type: 'user', content: input, align: 'right' }]);
+      // 메시지 전송 처리
+      const handleSendMessage = async () => {
+            if (!input.trim() && !selectedFile) return;
+
+            let newMessage = {
+                  type: 'user',
+                  content: input.trim(),
+                  align: 'right',
+            };
+
+            // 파일이 있는 경우 처리
+            if (selectedFile) {
+                  try {
+                        const base64File = await convertFileToBase64(selectedFile);
+                        newMessage.file = {
+                              name: selectedFile.name,
+                              data: base64File,
+                              type: selectedFile.type
+                        };
+                  } catch (error) {
+                        console.error('File conversion failed:', error);
+                  }
+            }
+
+            setMessages(prev => [...prev, newMessage]);
             setInput('');
+            setSelectedFile(null);
+            if (fileInputRef.current) {
+                  fileInputRef.current.value = '';
+            }
 
             // 챗봇 응답 시뮬레이션
             if (input === '서울특별시 삼선교로 8길 21 101호') {
@@ -50,16 +83,36 @@ const ChatRoom = () => {
             }
       };
 
-      // 파일 선택 핸들러
+      // Enter 키 처리
+      const handleKeyPress = (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSendMessage();
+            }
+      };
+
+      // 폼 제출 처리
+      const handleSubmit = (e) => {
+            e.preventDefault();
+            handleSendMessage();
+      };
+
+      // 파일 선택 처리
       const handleFileSelect = (e) => {
             const file = e.target.files[0];
             if (file) {
+                  // 파일 크기 체크 (예: 5MB 제한)
+                  if (file.size > 5 * 1024 * 1024) {
+                        alert('File size should not exceed 5MB');
+                        return;
+                  }
                   setSelectedFile(file);
+                  // 선택된 파일 이름을 입력창에 표시 (선택사항)
+                  setInput(prev => prev + ` [File: ${file.name}]`);
             }
       };
 
       const handleOptionClick = (option) => {
-            // 선택된 옵션을 사용자 메시지로 추가
             setMessages(prev => [...prev, { type: 'user', content: option, align: 'right' }]);
 
             if (option === '전세상담') {
@@ -71,6 +124,7 @@ const ChatRoom = () => {
                   }, 1000);
             }
       };
+
 
       return (
             <div className="chat-room">
@@ -89,9 +143,16 @@ const ChatRoom = () => {
                             <p key={i}>{line}</p>
                           ))}
                           {message.file && (
-                            <p className="file-attachment">
-                              📎 {message.file.name}
-                            </p>
+                            <div className="file-attachment">
+                              <p>📎 {message.file.name}</p>
+                              {message.file.type.startsWith('image/') && (
+                                <img 
+                                  src={message.file.data} 
+                                  alt={message.file.name}
+                                  style={{ maxWidth: '200px', marginTop: '8px' }}
+                                />
+                              )}
+                            </div>
                           )}
                         </>
                       ) : message.options ? (
@@ -112,7 +173,7 @@ const ChatRoom = () => {
                 ))}
                 <div ref={messagesEndRef} />
               </div>
-              <div className="chat-input-wrapper">
+              <form onSubmit={handleSubmit} className="chat-input-wrapper">
                 <div className="chat-input-container">
                   <label className="file-upload-button">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -129,6 +190,7 @@ const ChatRoom = () => {
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
+                    onKeyPress={handleKeyPress}
                     placeholder="Type the words..."
                     className="chat-input"
                   />
@@ -138,9 +200,9 @@ const ChatRoom = () => {
                     <path d="M12 20L4 12L12 4L13.425 5.425L7.825 11H20V13H7.825L13.425 18.575L12 20Z" fill="white" transform="rotate(180 12 12)"/>
                   </svg>
                 </button>
-              </div>
+              </form>
             </div>
           );
         };
-        
-        export default ChatRoom;
+
+export default ChatRoom;

@@ -4,36 +4,74 @@
       flex-direction: column;
       height: 100vh;
       background-color: white;
-      padding: 20px 20px;
       width: calc(100vw - 300px);
       margin: 20px;
-    }
-    
-    .chat-messages {
+      padding: 20px;  /* 모든 방향에 동일한 패딩 적용 */
+  }
+
+  .chat-messages {
       flex: 1;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      padding-bottom: 20px;
       width: 100%;
       max-width: 100%;
-      margin: 0 auto;
-    }
+      margin: 0;
+      padding: 0 0 20px 0;  /* 하단 패딩만 유지 */
+  }
 
-.message {
+  .message {
       display: flex;
       align-items: flex-start;
       gap: 12px;
       width: 100%;
       margin: 10px 0;
-}
+      padding: 0;
+  }
 
-.message.bot {
+  .message-content {
+      display: inline-block;
+      max-width: max(280px, 60%);
+      min-width: min-content;
+      padding: 12px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      line-height: 1.4;
+      white-space: pre-wrap;
+      word-break: break-word;
+  }
+
+  .message.bot {
       justify-content: flex-start;
+      max-width: 85%;
+  }
+
+  .message.user {
+      justify-content: flex-end;
+      max-width: 85%;
+  }
+
+
+  .message.bot .message-content {
+      background-color: #FFB6C1;
+      color: white;
+      margin-right: auto;
+  }
+
+  .message.user .message-content {
+      background-color: #FFE4E1;
+      color: black;
+      margin-left: auto;
+  }
+
+/* 짧은 메시지를 위한 개선 */
+.message-content p {
+      margin: 0;
+      min-width: fit-content;
 }
 
-.message.user {
-      justify-content: flex-end;
+.message-content p+p {
+      margin-top: 8px;
 }
 
 .bot-icon {
@@ -45,50 +83,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-right: 8px;
-}
-
-.message-content {
-      max-width: 90%;
-      padding: 15px 20px;
-      border-radius: 20px;
-      font-size: 14px;
-      line-height: 1.4;
-      white-space: pre-wrap;
-}
-
-.message.bot .message-content {
-      background-color: #FFB6C1;
-      color: white;
-}
-
-.message.user .message-content {
-      background-color: #FFE4E1;
-      color: black;
-}
-
-.message-content {
-      max-width: 600px; /* 메시지 컨텐츠의 최대 너비 고정 */
-      min-width: 100px; /* 최소 너비 설정 */
-      padding: 15px 20px;
-      border-radius: 20px;
-      font-size: 14px;
-      line-height: 1.4;
-      white-space: pre-wrap;
-    }
-
-.message-content p+p {
-      margin-top: 8px;
+      margin-right: 0;
 }
 
 .chat-input-wrapper {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 20px 0;
-    }
-    
-    .chat-input-container {
+      padding: 0;  /* 패딩 제거 */
+      margin-top: 20px;  /* 대신 상단 마진 추가 */
+  }
+
+.chat-input-container {
       flex: 1;
       display: flex;
       align-items: center;
@@ -96,22 +102,22 @@
       border: 1px solid #E5E7EB;
       border-radius: 100px;
       padding: 8px 16px;
-    }
-    
-    .chat-input {
+}
+
+.chat-input {
       flex: 1;
       border: none;
       outline: none;
       font-size: 14px;
       padding: 8px;
       background: transparent;
-    }
-    
-    .chat-input::placeholder {
+}
+
+.chat-input::placeholder {
       color: #9CA3AF;
-    }
-    
-    .file-upload-button {
+}
+
+.file-upload-button {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -119,13 +125,13 @@
       padding: 4px;
       border-radius: 50%;
       transition: background-color 0.2s;
-    }
-    
-    .file-upload-button:hover {
+}
+
+.file-upload-button:hover {
       background-color: #F3F4F6;
-    }
-    
-    .send-button {
+}
+
+.send-button {
       width: 40px;
       height: 40px;
       background-color: #FF69B4;
@@ -136,13 +142,13 @@
       justify-content: center;
       cursor: pointer;
       transition: background-color 0.2s;
-    }
-    
-    .send-button:hover {
+}
+
+.send-button:hover {
       background-color: #FF1493;
-    }
-    
-    .file-attachment {
+}
+
+.file-attachment {
       margin-top: 8px;
       font-size: 12px;
       color: #666;
@@ -150,26 +156,26 @@
       padding: 4px 8px;
       border-radius: 4px;
       display: inline-block;
-    }
-    
-    .message.bot .message-content {
+}
+
+.message.bot .message-content {
       background-color: #FFB6C1;
       color: white;
       border-radius: 20px;
-    }
-    
-    .message.user .message-content {
+}
+
+.message.user .message-content {
       background-color: #FFE4E1;
       color: black;
       border-radius: 20px;
-    }
-    
-    .options-container {
+}
+
+.options-container {
       display: flex;
       gap: 20px;
-    }
-    
-    .option-button {
+}
+
+.option-button {
       background-color: #FFE4E1;
       border: none;
       padding: 12px 24px;
@@ -178,8 +184,8 @@
       font-size: 14px;
       cursor: pointer;
       transition: background-color 0.2s;
-    }
-    
-    .option-button:hover {
+}
+
+.option-button:hover {
       background-color: #FFD8D8;
-    }
+}
