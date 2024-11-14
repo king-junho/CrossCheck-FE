@@ -1,4 +1,6 @@
 // src/Chatbot/components/ChatRoomCreate.jsx
+
+// 채팅방의 제목을 정하는 Page
 import React, { useState } from 'react';
 import '../css/chatRoomCreate.css';
 

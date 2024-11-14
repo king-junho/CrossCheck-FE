@@ -1,4 +1,6 @@
 // src/Chatbot/components/Chatbot.jsx
+
+// 챗봇 Page의 Container
 import React, { useState } from 'react';
 import ChatRoomCreate from './ChatRoomCreate';
 import ChatRoom from './ChatRoom';
