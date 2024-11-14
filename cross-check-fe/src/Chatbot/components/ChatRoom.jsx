@@ -74,67 +74,73 @@ const ChatRoom = () => {
 
       return (
             <div className="chat-room">
-                  <div className="chat-messages">
-                        {messages.map((message, index) => (
-                              <div key={index} className={`message ${message.type}`}>
-                                    {message.type === 'bot' && (
-                                          <div className="bot-icon">
-                                                <img src="./chatbot-icon.png" alt="Bot" width="22" height="19" />
-                                          </div>
-                                    )}
-                                    <div className="message-content">
-                                          {message.content ? (
-                                                <>
-                                                      {message.content.split('\n').map((line, i) => (
-                                                            <p key={i}>{line}</p>
-                                                      ))}
-                                                      {message.file && (
-                                                            <p className="file-attachment">
-                                                                  📎 {message.file.name}
-                                                            </p>
-                                                      )}
-                                                </>
-                                          ) : message.options ? (
-                                                <div className="options-container">
-                                                      {message.options.map((option, idx) => (
-                                                            <button
-                                                                  key={idx}
-                                                                  className="option-button"
-                                                                  onClick={() => handleOptionClick(option)}
-                                                            >
-                                                                  {option}
-                                                            </button>
-                                                      ))}
-                                                </div>
-                                          ) : null}
-                                    </div>
-                              </div>
-                        ))}
-                        <div ref={messagesEndRef} />
+              <div className="chat-messages">
+                {messages.map((message, index) => (
+                  <div key={index} className={`message ${message.type}`}>
+                    {message.type === 'bot' && (
+                      <div className="bot-icon">
+                        <img src="./chatbot-icon.png" alt="Bot" width="22" height="19" />
+                      </div>
+                    )}
+                    <div className="message-content">
+                      {message.content ? (
+                        <>
+                          {message.content.split('\n').map((line, i) => (
+                            <p key={i}>{line}</p>
+                          ))}
+                          {message.file && (
+                            <p className="file-attachment">
+                              📎 {message.file.name}
+                            </p>
+                          )}
+                        </>
+                      ) : message.options ? (
+                        <div className="options-container">
+                          {message.options.map((option, idx) => (
+                            <button 
+                              key={idx} 
+                              className="option-button"
+                              onClick={() => handleOptionClick(option)}
+                            >
+                              {option}
+                            </button>
+                          ))}
+                        </div>
+                      ) : null}
+                    </div>
                   </div>
-                  <form className="chat-input-container" onSubmit={handleSubmit}>
-                        <input
-                              type="text"
-                              value={input}
-                              onChange={(e) => setInput(e.target.value)}
-                              placeholder="Type the words..."
-                              className="chat-input"
-                        />
-                        <label className="file-upload-button">
-                              📎
-                              <input
-                                    type="file"
-                                    onChange={handleFileSelect}
-                                    ref={fileInputRef}
-                                    style={{ display: 'none' }}
-                              />
-                        </label>
-                        <button type="submit" className="send-button">
-                              ▶
-                        </button>
-                  </form>
+                ))}
+                <div ref={messagesEndRef} />
+              </div>
+              <div className="chat-input-wrapper">
+                <div className="chat-input-container">
+                  <label className="file-upload-button">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48" stroke="#FF69B4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <input
+                      type="file"
+                      onChange={handleFileSelect}
+                      ref={fileInputRef}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                  <input
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Type the words..."
+                    className="chat-input"
+                  />
+                </div>
+                <button type="submit" className="send-button">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 20L4 12L12 4L13.425 5.425L7.825 11H20V13H7.825L13.425 18.575L12 20Z" fill="white" transform="rotate(180 12 12)"/>
+                  </svg>
+                </button>
+              </div>
             </div>
-      );
-};
-
-export default ChatRoom;
+          );
+        };
+        
+        export default ChatRoom;
