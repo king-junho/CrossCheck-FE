@@ -11,40 +11,38 @@ const Sidebar = () => {
     <aside className="sidebar">
       <h1 className="sidebar-title">Cross Check</h1>
       <button className="new-chat-btn" onClick={() => navigate('/chatbot')}>
-        + Start a new chat
-      </button>
-      <nav className="sidebar-nav">
-        <ul>
-          <li 
-            className={`nav-item ${location.pathname === '/chatbot' ? 'active' : ''}`}
-            onClick={() => navigate('/chatbot')}
-          >
-            <span className="nav-icon">🤖</span>
-            Chat Bot
-          </li>
-          <li 
-            className={`nav-item ${location.pathname === '/history' ? 'active' : ''}`}
-            onClick={() => navigate('/history')}
-          >
-            <span className="nav-icon">⏰</span>
-            History
-          </li>
-          <li 
-            className={`nav-item ${location.pathname === '/legal-service' ? 'active' : ''}`}
-            onClick={() => navigate('/legal-service')}
-          >
-            <span className="nav-icon">⚖️</span>
-            Legal Brokerage Service
-          </li>
-          <li 
-            className={`nav-item ${location.pathname === '/community' ? 'active' : ''}`}
-            onClick={() => navigate('/community')}
-          >
-            <span className="nav-icon">👥</span>
-            Community
-          </li>
-        </ul>
-      </nav>
+  Start a new chat
+</button>
+
+<nav className="sidebar-nav">
+  <ul>
+    <li 
+      className={`nav-item chatbot ${location.pathname === '/chatbot' ? 'active' : ''}`}
+      onClick={() => navigate('/chatbot')}
+    >
+      Chat Bot
+    </li>
+    <li 
+      className={`nav-item history ${location.pathname === '/history' ? 'active' : ''}`}
+      onClick={() => navigate('/history')}
+    >
+      History
+    </li>
+    <li 
+      className={`nav-item legal-service ${location.pathname === '/legal-service' ? 'active' : ''}`}
+      onClick={() => navigate('/legal-service')}
+    >
+      Legal Brokerage Service
+    </li>
+    <li 
+      className={`nav-item community ${location.pathname === '/community' ? 'active' : ''}`}
+      onClick={() => navigate('/community')}
+    >
+      Community
+    </li>
+  </ul>
+</nav>
+
     </aside>
   );
 };
