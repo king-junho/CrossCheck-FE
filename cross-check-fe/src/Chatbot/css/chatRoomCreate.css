@@ -61,7 +61,7 @@
 }
 
 .create-button.active {
-      background-color: #FFB6C1; /* 활성화된 상태 */
+      background-color: #FF8FAB; /* 활성화된 상태 */
       cursor: pointer;
 }
 

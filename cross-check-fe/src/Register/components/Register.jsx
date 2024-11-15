@@ -22,7 +22,7 @@ const Register = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:3000/api/signUp', {
+      const response = await fetch('https://43.201.176.194.nip.io/api/signUp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
