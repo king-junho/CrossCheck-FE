@@ -7,20 +7,11 @@ const Sidebar = () => {
       const navigate = useNavigate();
       const location = useLocation();
     
-      const handleNewChat = () => {
-        // 새로운 채팅 ID 생성 (예: 타임스탬프 사용)
-        const newChatId = Date.now();
-        
-        // 새로운 채팅방으로 이동
-        navigate('/chatbot');
-        // ${newChatId}
-      };
-    
       return (
         <aside className="sidebar">
           <h1 className="sidebar-title">Cross Check</h1>
           <div className="new-chat-container">
-            <button className="new-chat-btn" onClick={handleNewChat}>
+            <button className="new-chat-btn" onClick={() => navigate('/chatbot')}>
               Start a new chat
             </button>
           </div>

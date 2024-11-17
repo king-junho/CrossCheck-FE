@@ -9,7 +9,6 @@ import Community from './Community/components/Community';
 import History from './History/components/History';
 import LegalService from './LegalService/components/LegalService';
 import './App.css';
-import ChatRoom from './Chatbot/components/ChatRoom';
 
 const AppLayout = ({ children }) => {
       return (
