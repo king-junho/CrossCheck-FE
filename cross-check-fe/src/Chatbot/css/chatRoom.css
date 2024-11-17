@@ -7,15 +7,17 @@
 }
 
 * {
-    font-family: var(--font-pretendard-Medium);
+    font-family: var(--font-pretendard);
 }
 
 body {
-    font-family: var(--font-pretendard-Bold);
+    font-family: var(--font-pretendard);
+    font-weight: 550;
 }
 
 input, button, textarea {
-    font-family: var(--font-pretendard-ExtraBold);
+    font-family: var(--font-pretendard);
+    font-weight: 700;
 }
 
 .chat-room {
