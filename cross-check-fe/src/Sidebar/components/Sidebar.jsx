@@ -12,7 +12,7 @@ const Sidebar = () => {
         const newChatId = Date.now();
         
         // 새로운 채팅방으로 이동
-        navigate(`/chatbot` );
+        navigate('/chatbot');
         // ${newChatId}
       };
     

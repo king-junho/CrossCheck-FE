@@ -9,7 +9,6 @@ export const sendMessageToClaude = async (messages) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${CLAUDE_API_KEY}`,  // x-api-key 대신 Bearer 토큰 사용
         'anthropic-version': '2024-02-15-preview',
         'x-api-key': CLAUDE_API_KEY
       },
@@ -53,7 +52,11 @@ export const sendMessageToClaude = async (messages) => {
     console.log('Claude API Response:', data); // 응답 로깅
     
     // 응답 구조에 따라 적절한 필드 반환
-    return data.content[0].text || data.content || '응답을 처리할 수 없습니다.';
+    if (data.content && Array.isArray(data.content) && data.content.length > 0) {
+      return data.content[0].text;
+    } else {
+      throw new Error('Invalid response format from Claude API');
+    }
   } catch (error) {
     console.error('Error in sendMessageToClaude:', error);
     throw new Error(`Claude API Error: ${error.message}`);
