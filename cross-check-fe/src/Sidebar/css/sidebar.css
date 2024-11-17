@@ -19,49 +19,43 @@
       font-weight: 800;
       color: #333;
       margin-bottom: 30px;
-      text-align: center; /* 중앙 정렬 추가 */
+      text-align: center;
     }
     
-   
-
+    .new-chat-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 48px;
+      padding: 0 20px;
+    }
+    
     .new-chat-btn {
-      width: 164px;
+      width: 100%;
       height: 41px;
-      display: inline-flex; /* 버튼을 한 줄로 배치 */
+      display: flex;
       align-items: center;
-      padding: 8px 16px; /* 버튼 크기 설정 */
+      justify-content: center;
+      padding: 8px 16px;
       background-color: white;
       border: 1px solid #FFE4E1;
-      border-radius: 10px; /* 모서리 둥글게 */
+      border-radius: 10px;
       font-family: "Pretendard-Medium", Helvetica;
       font-size: 15px;
       color: #666;
       cursor: pointer;
       transition: all 0.2s;
-      margin-bottom: 48px;
-}
-
-.new-chat-btn::before {
-      content: '';
-      display: inline-block;
-      width: 11px; /* 이미지 크기 */
-      height: 11px;
-      margin-right: 8px; /* 텍스트와 간격 */
-      background-image: url('../../assets/images/add.png'); /* 플러스 아이콘 이미지 경로 */
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-}
-
-.new-chat-btn:hover {
+      position: relative;
+    }
+    
+    .new-chat-btn::before {
+      content: '+';
+      font-size: 18px;
+      margin-right: 8px;
+      line-height: 1;
+    }
+    
+    .new-chat-btn:hover {
       background-color: #FFE4E1;
-}
-
-
-    .nav-menu ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
     }
     
     .nav-item {
@@ -74,41 +68,41 @@
       transition: all 0.2s;
       font-size: 16px;
       font-family: "Pretendard-Regular", Helvetica;
-}
-
-.nav-item:hover {
+    }
+    
+    .nav-item:hover {
       background-color: #FFE4E1;
-}
-
-.nav-item.active {
+    }
+    
+    .nav-item.active {
       background-color: #FFB6C1;
       color: white;
       font-family: "Pretendard-Bold", Helvetica;
-}
-
-.nav-item::before {
+    }
+    
+    .nav-item::before {
       content: '';
       display: inline-block;
-      width: 20px; /* 이미지 크기 */
+      width: 20px;
       height: 20px;
-      margin-right: 12px; /* 텍스트와 간격 */
+      margin-right: 12px;
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
-}
-
-.nav-item.chatbot::before {
-      background-image: url('../../assets/images/chatbot.png'); /* 챗봇 아이콘 경로 */
-}
-
-.nav-item.history::before {
-      background-image: url('../../assets/images/history.png'); /* 히스토리 아이콘 경로 */
-}
-
-.nav-item.legal-service::before {
-      background-image: url('../../assets/images/brokerage.png'); /* 법률 서비스 아이콘 경로 */
-}
-
-.nav-item.community::before {
-      background-image: url('../../assets/images/community.png'); /* 커뮤니티 아이콘 경로 */
-}
+    }
+    
+    .nav-item.chatbot::before {
+      background-image: url('../../assets/images/chatbot.png');
+    }
+    
+    .nav-item.history::before {
+      background-image: url('../../assets/images/history.png');
+    }
+    
+    .nav-item.legal-service::before {
+      background-image: url('../../assets/images/brokerage.png');
+    }
+    
+    .nav-item.community::before {
+      background-image: url('../../assets/images/community.png');
+    }
