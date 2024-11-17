@@ -67,25 +67,6 @@ const ChatRoom = () => {
 
             setMessages(prev => [...prev, newMessage]);
 
-            try {
-                  // Claude API 호출
-                  const claudeResponse = await sendMessageToClaude([...messages, newMessage]);
-
-                  // 챗봇 응답을 대화 기록에 추가
-                  setMessages(prev => [...prev, {
-                        type: 'bot',
-                        content: claudeResponse,
-                        align: 'left'
-                  }]);
-            } catch (error) {
-                  console.error('Error getting response from Claude:', error);
-                  setMessages(prev => [...prev, {
-                        type: 'bot',
-                        content: '죄송합니다. 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
-                        align: 'left'
-                  }]);
-            }
-
             // 입력창 초기화
             setInput('');
             setSelectedFile(null);
@@ -94,16 +75,7 @@ const ChatRoom = () => {
             }
 
             // 단계별 챗봇 응답 처리
-            if (inputStep === 1) {  // 첫 번째 단계: 주소 입력
-                  setTimeout(() => {
-                        setMessages(prev => [...prev, {
-                              type: 'bot',
-                              content: '집주인의 성함과 주민등록번호를 입력해주세요.',
-                              align: 'left'
-                        }]);
-                        setInputStep(2); // 다음 단계로 이동
-                  }, 1000);
-            } else if (inputStep === 2) {  // 두 번째 단계: 성함 및 주민등록번호 입력
+            if (inputStep === 2) {  // 두 번째 단계: 성함 및 주민등록번호 입력
                   setTimeout(() => {
                         setMessages(prev => [...prev, {
                               type: 'bot',
@@ -112,7 +84,8 @@ const ChatRoom = () => {
                         }]);
                         setInputStep(3); // 다음 단계로 이동
                   }, 1000);
-            } else if (inputStep === 3) {  // 세 번째 단계: 실거주지 입력
+            }
+            else if (inputStep === 3) {  // 세 번째 단계: 실거주지 입력
                   setTimeout(() => {
                         setMessages(prev => [...prev,
                         {
@@ -122,13 +95,51 @@ const ChatRoom = () => {
                         },
                         {
                               type: 'bot',
-                              content: '아래 링크로 이동하여 평가를 위해 PDF 형식의 문서를 다운로드하여 주택 임대 사기의 위험이 있는지 확인하시기 바랍니다.\n\n- 건물 등기사항전부증명서: 건물에 관한 등기기록 사항의 전부 또는 일부를 증명하는 서면\n- 부동산 등기부등본: 부동산에 관한 권리 관계를 적어 두는 등기부를 복사한 증명 문서\n- 납세 증명서: 임대인에게 미지급 국세 납부액이 있는지 평가\n- 지방세 납부 증명서: 임대인에게 미납 지방세 납부액이 있는지 평가\n\n이를 통해 모든 문서를 확인하세요.',
+                              content: '아래 링크로 이동하여 평가를 위해 PDF 형식의 문서를 다운로드하여 주택 임대 사기의 위험이 있는지 확인하시기 바랍니다.',
                               align: 'left'
+                        },
+                        {
+                              type: 'bot',
+                              options: [
+                                    '건물 등기사항전부증명서',
+                                    '부동산 등기부등본',
+                                    '납세 증명서',
+                                    '지방세 납부 증명서'
+                              ]
                         }
                         ]);
-                        setInputStep(1); // 대화 완료 후 초기화
+                        setInputStep(4); // Document Verification 단계로 이동
                   }, 1000);
             }
+            else if (inputStep === 4) {  // Document Verification 이후 자유 대화
+                  try {
+                        const claudeResponse = await sendMessageToClaude([...messages, newMessage]);
+                        setMessages(prev => [...prev, {
+                              type: 'bot',
+                              content: claudeResponse,
+                              align: 'left'
+                        }]);
+                  } catch (error) {
+                        console.error('Error getting response from Claude:', error);
+                        setMessages(prev => [...prev, {
+                              type: 'bot',
+                              content: '죄송합니다. 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+                              align: 'left'
+                        }]);
+                  }
+            }
+      };
+
+      // Document Verification 버튼 클릭 핸들러 추가
+      const handleDocumentClick = (document) => {
+            window.open('http://www.iros.go.kr/', '_blank');
+
+            // 버튼 클릭 후 메시지 추가
+            setMessages(prev => [...prev, {
+                  type: 'user',
+                  content: `${document} 확인하기`,
+                  align: 'right'
+            }]);
       };
 
       const handleKeyPress = (e) => {
@@ -156,50 +167,49 @@ const ChatRoom = () => {
       };
 
       const handleOptionClick = async (option) => {
-            const userMessage = { type: 'user', content: option, align: 'right' }; 
+            const userMessage = { type: 'user', content: option, align: 'right' };
             setMessages(prev => [...prev, userMessage]);
-        
+
             if (option === '전세상담') {
-                try {
-                    const claudeResponse = await sendMessageToClaude([
-                        {
-                            type: 'user',
-                            content: '전세 계약 상담을 시작하겠습니다. 전세 사기 위험을 파악하고 안전한 계약을 위한 조언을 해주세요.'
-                        }
-                    ]);
-                    
-                    setMessages(prev => [...prev, {
-                        type: 'bot',
-                        content: claudeResponse,
-                        align: 'left'
-                    }]);
-                } catch (error) {
-                    console.error('Error getting response from Claude:', error);
-                    setMessages(prev => [...prev, {
-                        type: 'bot',
-                        content: '죄송합니다. 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
-                        align: 'left'
-                    }]);
-                }
+                  // 첫 번째 단계 시작
+                  setTimeout(() => {
+                        setMessages(prev => [...prev, {
+                              type: 'bot',
+                              content: '집주인의 성함과 주민등록번호를 입력해주세요.',
+                              align: 'left'
+                        }]);
+                        setInputStep(2); // 다음 단계로 이동
+                  }, 1000);
             }
             else if (option === '바로 질문하기') {
-                try {
-                    const claudeResponse = await sendMessageToClaude([...messages.filter(msg => msg.content), userMessage]);
-                    setMessages(prev => [...prev, {
-                        type: 'bot',
-                        content: claudeResponse,
-                        align: 'left'
-                    }]);
-                } catch (error) {
-                    console.error('Error getting response from Claude:', error);
-                    setMessages(prev => [...prev, {
-                        type: 'bot',
-                        content: '죄송합니다. 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
-                        align: 'left'
-                    }]);
-                }
+                  try {
+                        const claudeResponse = await sendMessageToClaude([...messages.filter(msg => msg.content), userMessage]);
+                        setMessages(prev => [...prev, {
+                              type: 'bot',
+                              content: claudeResponse,
+                              align: 'left'
+                        }]);
+                  } catch (error) {
+                        console.error('Error getting response from Claude:', error);
+                        setMessages(prev => [...prev, {
+                              type: 'bot',
+                              content: '죄송합니다. 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+                              align: 'left'
+                        }]);
+                  }
             }
-        };
+      };
+
+      // 문서 설명을 반환하는 함수 추가
+      const getDocumentDescription = (document) => {
+            const descriptions = {
+                  '건물 등기사항전부증명서': '건물에 관한 등기기록 사항의 전부 또는 일부를 증명하는 서면',
+                  '부동산 등기부등본': '부동산에 관한 권리 관계를 적어 두는 등기부를 복사한 증명 문서',
+                  '납세 증명서': '임대인에게 미지급 국세 납부액이 있는지 평가',
+                  '지방세 납부 증명서': '임대인에게 미납 지방세 납부액이 있는지 평가'
+            };
+            return descriptions[document] || '';
+      };
 
       return (
             <div className="chat-room">
@@ -214,21 +224,44 @@ const ChatRoom = () => {
                                     <div className="message-content">
                                           {message.content ? (
                                                 <>
-                                                      {message.content.split('\n').map((line, i) => (
-                                                            <p key={i}>{line}</p>
-                                                      ))}
+                                                      {typeof message.content === 'string' ? (
+                                                            message.content.split('\n').map((line, i) => (
+                                                                  <p key={i}>{line}</p>
+                                                            ))
+                                                      ) : (
+                                                            <p>{message.content}</p>
+                                                      )}
                                                 </>
                                           ) : message.options ? (
                                                 <div className="options-container">
-                                                      {message.options.map((option, idx) => (
-                                                            <button
-                                                                  key={idx}
-                                                                  className="option-button"
-                                                                  onClick={() => handleOptionClick(option)}
-                                                            >
-                                                                  {option}
-                                                            </button>
-                                                      ))}
+                                                      {/* 일반 옵션 버튼인 경우 */}
+                                                      {message.options.length === 2 ? (
+                                                            message.options.map((option, idx) => (
+                                                                  <button
+                                                                        key={idx}
+                                                                        className="option-button"
+                                                                        onClick={() => handleOptionClick(option)}
+                                                                  >
+                                                                        {option}
+                                                                  </button>
+                                                            ))
+                                                      ) : (
+                                                            // Document Verification 버튼들인 경우
+                                                            <div className="document-buttons-grid">
+                                                                  {message.options.map((document, idx) => (
+                                                                        <button
+                                                                              key={idx}
+                                                                              className="document-button"
+                                                                              onClick={() => handleDocumentClick(document)}
+                                                                        >
+                                                                              {document}
+                                                                              <p className="document-description">
+                                                                                    {getDocumentDescription(document)}
+                                                                              </p>
+                                                                        </button>
+                                                                  ))}
+                                                            </div>
+                                                      )}
                                                 </div>
                                           ) : null}
                                     </div>
