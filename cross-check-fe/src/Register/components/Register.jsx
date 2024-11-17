@@ -1,4 +1,3 @@
-// src/Register/components/Register.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/register.css';
@@ -12,9 +11,52 @@ const Register = () => {
     birthday: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/chatbot');
+
+    const requestData = {
+      name: formData.name,
+      loginId: formData.id,
+      password: formData.password,
+      birth: formData.birthday
+    };
+
+    try {
+      const response = await fetch('https://43.201.176.194.nip.io/api/signUp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // 성공 응답 처리
+        console.log("회원가입에 성공했습니다:", result.message);
+        navigate('/chatbot'); // 성공 시 '/chatbot' 경로로 이동
+      } else {
+        // 상태 코드에 따라 오류 메시지 분기 처리
+        if (response.status === 400) {
+          // 400 Bad Request 처리
+          if (result.message === "생년월일을 입력해주세요.") {
+            alert("생년월일을 입력해주세요.");
+          } else {
+            alert("잘못된 요청입니다.");
+          }
+        } else if (response.status === 409) {
+          // 409 Conflict 처리
+          alert("이미 존재하는 아이디입니다.");
+        } else {
+          // 기타 오류
+          alert("회원가입에 실패했습니다.");
+        }
+      }
+    } catch (error) {
+      console.error("요청 실패:", error);
+      alert("서버와 통신에 실패했습니다.");
+    }
   };
 
   return (
@@ -43,7 +85,7 @@ const Register = () => {
           />
           <input
             type="text"
-            placeholder="생년월일"
+            placeholder="생년월일 (예: 2001-08-08)"
             value={formData.birthday}
             onChange={(e) => setFormData({...formData, birthday: e.target.value})}
           />

@@ -49,17 +49,22 @@
 
 .create-button {
       padding: 12px 24px;
-      background-color: #FFB6C1;
-      color: white;
+      background-color: #FFD1DC; /* 비활성화된 상태 */
+      color: #fff;
       border: none;
       border-radius: 8px;
       font-family: "Pretendard";
       font-size: 16px;
       font-weight: 500;
-      cursor: pointer;
-      transition: opacity 0.2s;
+      cursor: not-allowed;
+      transition: background-color 0.3s, opacity 0.2s;
 }
 
-.create-button:hover {
+.create-button.active {
+      background-color: #FF8FAB; /* 활성화된 상태 */
+      cursor: pointer;
+}
+
+.create-button:hover.active {
       opacity: 0.9;
 }
