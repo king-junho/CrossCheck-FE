@@ -11,7 +11,7 @@ const Sidebar = () => {
         <aside className="sidebar">
           <h1 className="sidebar-title">Cross Check</h1>
           <div className="new-chat-container">
-            <button className="new-chat-btn" onClick={() => navigate('/chatbot')}>
+            <button className="new-chat-btn" onClick={() => navigate('/Chatbot')}>
               Start a new chat
             </button>
           </div>
@@ -19,26 +19,26 @@ const Sidebar = () => {
           <nav className="sidebar-nav">
             <ul>
               <li 
-                className={`nav-item chatbot ${location.pathname.includes('/chatbot') ? 'active' : ''}`}
-                onClick={() => navigate('/chatbot')}
+                className={`nav-item chatbot ${location.pathname.includes('/Chatbot') ? 'active' : ''}`}
+                onClick={() => navigate('/Chatbot')}
               >
                 Chat Bot
               </li>
               <li 
-                className={`nav-item history ${location.pathname === '/history' ? 'active' : ''}`}
-                onClick={() => navigate('/history')}
+                className={`nav-item history ${location.pathname === '/History' ? 'active' : ''}`}
+                onClick={() => navigate('/History')}
               >
                 History
               </li>
               <li 
-                className={`nav-item legal-service ${location.pathname === '/legal-service' ? 'active' : ''}`}
-                onClick={() => navigate('/legal-service')}
+                className={`nav-item legal-service ${location.pathname === '/LegalService' ? 'active' : ''}`}
+                onClick={() => navigate('/LegalService')}
               >
                 Legal Brokerage Service
               </li>
               <li 
-                className={`nav-item community ${location.pathname === '/community' ? 'active' : ''}`}
-                onClick={() => navigate('/community')}
+                className={`nav-item community ${location.pathname === '/Community' ? 'active' : ''}`}
+                onClick={() => navigate('/Community')}
               >
                 Community
               </li>

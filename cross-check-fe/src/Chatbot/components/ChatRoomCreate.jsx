@@ -26,7 +26,7 @@ const ChatRoomCreate = ({ onCreateRoom }) => {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="제목 입력하기..."
+            placeholder="제목 입력하기"
           />
         </div>
         <button

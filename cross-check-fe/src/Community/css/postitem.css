@@ -1,0 +1,24 @@
+.post-item td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  .post-item:hover {
+    background-color: #f9f9f9; /* 마우스 오버 시 배경색 */
+  }
+  
+  .post-item-title {
+    text-align: left; /* 제목은 왼쪽 정렬 */
+    padding-left: 10px;
+  }
+  
+  .post-item-number,
+  .post-item-writer,
+  .post-item-date,
+  .post-item-views,
+  .post-item-likes,
+  .post-item-comments {
+    text-align: center;
+  }
+  

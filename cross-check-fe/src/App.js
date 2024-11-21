@@ -9,6 +9,8 @@ import Community from "./Community/components/Community";
 import History from "./History/components/History";
 import LegalService from "./LegalService/components/LegalService";
 import Posting from "./Community/components/Posting";
+import PostDetail from "./Community/components/PostDetail";
+import CommunityBoard from "./Community/components/CommunityBoard"; 
 import "./App.css";
 
 const AppLayout = ({ children }) => {
@@ -31,7 +33,7 @@ const App = () => {
 
         {/* Protected routes with Sidebar */}
         <Route
-          path="/chatbot"
+          path="/Chatbot"
           element={
             <AppLayout>
               <Chatbot />
@@ -39,7 +41,7 @@ const App = () => {
           }
         />
         <Route
-          path="/community"
+          path="/Community"
           element={
             <AppLayout>
               <Community />
@@ -47,9 +49,10 @@ const App = () => {
           }
         />
         <Route path="/Posting" element={<Posting />} />
-
+        <Route path="/" element={<CommunityBoard />} />
+        <Route path="/post/:id" element={<PostDetail />} /> {/* 상세 페이지 라우팅 */}
         <Route
-          path="/history"
+          path="/History"
           element={
             <AppLayout>
               <History />
@@ -57,7 +60,7 @@ const App = () => {
           }
         />
         <Route
-          path="/legal-service"
+          path="/LegalService"
           element={
             <AppLayout>
               <LegalService />
