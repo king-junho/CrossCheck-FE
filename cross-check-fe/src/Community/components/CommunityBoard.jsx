@@ -12,9 +12,9 @@ const posts = [
   { id: 6, number: "06", title: "보증금 올려주면 월세 낮춰준다는데 괜찮을까요?", writer: "부동산 초보", date: "2024.10.19", views: 351, likes: 32, comments: 16 },
   { id: 7, number: "07", title: "신축 아파트 하자보수 기간이 어떻게 되나요?", writer: "내 집", date: "2024.10.16", views: 257, likes: 14, comments: 16 },
   { id: 8, number: "08", title: "집주인이 갑자기 계약 취소하자고 하네요ㅠㅠ", writer: "집순이", date: "2024.10.02", views: 184, likes: 40, comments: 16 },
-  { id: 1, number: "01", title: "집 계약할 때 뭐 먼저 봐야하나요?", writer: "집돌이", date: "2024.11.02", views: 112, likes: 30, comments: 5 },
-  { id: 2, number: "02", title: "자취생 저녁 메뉴 추천", writer: "자취생", date: "2024.10.28", views: 329, likes: 54, comments: 10 },
-  
+  { id: 1, number: "09", title: "집 계약할 때 뭐 먼저 봐야하나요?", writer: "집돌이", date: "2024.11.02", views: 112, likes: 30, comments: 5 },
+  { id: 2, number: "10", title: "자취생 저녁 메뉴 추천", writer: "자취생", date: "2024.10.28", views: 329, likes: 54, comments: 10 },
+
 ];
 
 const CommunityBoard = () => {
