@@ -27,7 +27,7 @@ const App = () => {
     <Router>
       <Routes>
         {/* Public routes */}
-        <Route path="/" element={<Posting />} />
+        <Route path="/" element={<Chatbot />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
