@@ -18,36 +18,24 @@ const Login = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:3000/api/signIn', {
+      const response = await fetch('https://qrwrsukdh4.execute-api.ap-northeast-2.amazonaws.com/signIn', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(requestData)
+        body: JSON.stringify(requestData),
       });
 
       const result = await response.json();
+      console.log('Result:', result);
 
       if (response.ok) {
-        // 로그인 성공 처리
-        console.log("로그인에 성공했습니다:", result.message);
-        const accessToken = result.data.accessToken;
-        // 토큰을 로컬 저장소에 저장하는 등의 후속 조치
-        localStorage.setItem('accessToken', accessToken);
-        navigate('/Chatbot'); // 로그인 성공 시 '/Chatbot' 페이지로 이동
+        // 로그인 성공 시 userId를 세션에 저장
+        sessionStorage.setItem('userId', formData.id); // 서버 응답에서 userId를 가져옴
+        alert("로그인에 성공했습니다!");
+        navigate('/Chatbot'); // 성공적으로 로그인 후 Chatbot 페이지로 이동
       } else {
-        // 상태 코드에 따른 오류 처리
-        if (response.status === 400) {
-          if (result.message === "사용자를 찾을 수 없습니다.") {
-            alert("사용자를 찾을 수 없습니다.");
-          } else if (result.message === "비밀번호가 일치하지 않습니다.") {
-            alert("비밀번호가 일치하지 않습니다.");
-          } else {
-            alert("잘못된 요청입니다.");
-          }
-        } else {
-          alert("로그인에 실패했습니다.");
-        }
+        alert(result.message || "로그인 실패");
       }
     } catch (error) {
       console.error("요청 실패:", error);
