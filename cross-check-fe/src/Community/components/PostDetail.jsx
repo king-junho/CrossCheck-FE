@@ -98,6 +98,7 @@ const PostDetail = () => {
   };
 
   return (
+    <div className="post-detail">
     <div className="post-detail-container">
               <Sidebar/>
 
@@ -211,6 +212,7 @@ const PostDetail = () => {
         />
         <button type="submit">댓글 추가</button>
       </form>
+    </div>
     </div>
   );
 };
