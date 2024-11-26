@@ -1,8 +1,8 @@
 .post-detail-container{
     max-width: 850px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
+    margin-left:420px;
+    margin-top:100px;
+    padding: 10px;
     border-radius: 10px;
     font-family: Arial, sans-serif;
 }
@@ -16,9 +16,11 @@
     font-family: Arial, sans-serif;
   }
   
-  .post-detail h1 {
-    font-size: 24px;
+  .post-detail-title {
+    font-size: 30px;
     margin-bottom: 10px;
+    font-weight: 700;
+
   }
   
   .post-detail p {
@@ -27,19 +29,38 @@
   
   /* 본문 내용 스타일 */
   .post-content {
-    margin-top: 20px;
-    padding: 10px;
+    height: 200px;
+    padding: 40px;
     background-color: #f9f9f9;
-    border: 1px solid #eee;
     border-radius: 5px;
+
   }
   
+  .post-detail-content{
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
   .post-content h3 {
     font-size: 18px;
     margin-bottom: 10px;
+    font-weight: 700;
   }
   
   /* 좋아요 버튼 스타일 */
+  
+  .likes-section{
+    display: flex;
+    justify-content: center; /* 양 끝으로 배치 */
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .like-section-contents{
+
+  }
   .like-button {
     margin-left: 10px;
     padding: 5px 10px;
@@ -93,7 +114,7 @@
   
   .comment-form input {
     flex: 1;
-    padding: 10px;
+    padding: 3px;
     border: 1px solid #ddd;
     border-radius: 5px;
   }
@@ -117,8 +138,8 @@
     display: flex;
     justify-content: space-between; /* 양 끝으로 배치 */
     align-items: center;
-    border: 1px solid #ddd;
-    padding: 10px;
+    background-color: #FFF0F5;
+
     font-size: 14px;
   }
   
@@ -128,9 +149,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #ddd;
-    padding: 10px;
-    font-size: 14px;
+    font-size: 14px;   
+    background-color: #FFF0F5;
+
+    
   }
   
   /* 날짜 스타일 */
@@ -148,33 +170,61 @@
     background-color: #f9f9f9;
   }
   
-  .reply-list {
+
+  .comment-item{
+    font-size: 12px;
+  }
+  /* .reply-list {
     margin-left: 20px;
     list-style-type: none;
-    padding: 0;
+    border: 1px solid black;
+    height: 50px;
+  } */
+
+  .reply-list-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
   }
   
-  .reply-list li {
-    margin: 5px 0;
+  /* .reply-list li {
+     margin: 5px 0;
     padding: 10px;
     background-color: #f1f1f1;
     border-radius: 5px;
-    border: 1px solid #ccc;
   }
-  
+   */
   /* 댓글 삭제, 수정, 답글 버튼 */
+
+  .comment-content{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .delete-button{
+    background-color: #ffb6c1;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 10px;
+
+  }
   .comment-buttons {
     display: flex;
-    gap: 10px;
     margin-top: 5px;
   }
   
   .comment-buttons button {
-    padding: 5px 10px;
-    background-color: #ddd;
+   background-color: #ffb6c1;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 10px;
+
   }
   
   .comment-buttons button:hover {
@@ -185,22 +235,32 @@
   .reply-form {
     margin-top: 10px;
     display: flex;
-    gap: 10px;
+    gap: 3px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #fff;
   }
+
+  .reply-button{
+    background-color: #ffb6c1;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 10px;
+    padding: 5px;
+    margin-left: 5px;
+  }
   
   .reply-form input {
     flex: 1;
-    padding: 10px;
+    padding: 3px;
     border: 1px solid #ddd;
     border-radius: 5px;
   }
   
   .reply-form button {
-    padding: 10px;
     background-color: #ffb6c1;
     color: white;
     border: none;
@@ -211,4 +271,15 @@
   .reply-form button:hover {
     background-color: #ff6b81;
   }
+  
+
+.reply-form button{
+  padding: 10px;
+    background-color: #ffb6c1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
   

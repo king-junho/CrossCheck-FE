@@ -4,13 +4,13 @@ import "../css/postdetail.css";
 import Sidebar from "../../Sidebar/components/Sidebar";
 const currentUser = {
   id: 1,
-  name: "로그인된 사용자",
+  name: "임예은",
 };
 
 const posts = [
   {
     id: 1,
-    title: "집 계약할 때 뭐 먼저 봐야하나요?",
+    title: "집 계약할 때 무엇을 먼저 봐야하나요?",
     writer: "집돌이",
     date: "2024.11.02",
     views: 112,
@@ -102,8 +102,7 @@ const PostDetail = () => {
               <Sidebar/>
 
       <div className="post-content-container">
-
-        <h1>{post.title}</h1>
+        <div className="post-detail-title">{post.title}</div>
         <div className="write-user-and-date">
           <p>
             <strong>작성자:</strong> {post.writer}
@@ -115,10 +114,14 @@ const PostDetail = () => {
         <div className="views-and-likes">
           <p>
             <strong>조회수:</strong> {post.views}
+            </p>
+            <p>
+            <strong>좋아요:</strong> {likes}{" "}
           </p>
         </div>
+        <div className="post-detail-content">내용</div>
+
         <div className="post-content">
-          <h3>내용</h3>
           <p>{post.content}</p>
         </div>
       </div>
@@ -126,7 +129,9 @@ const PostDetail = () => {
       <div className="comments-and-likes-container">
         <div className="likes-section">
           <p>
-            <strong>좋아요:</strong> {likes}{" "}
+            <div className="like-section-contents">이 글이 도움이 되셨나요?</div>
+            </p>
+            <p>
             <button className="like-button" onClick={handleLike}>
               👍
             </button>
@@ -139,7 +144,10 @@ const PostDetail = () => {
             {comments.map((comment) => (
               <li key={comment.id} className="comment-item">
                 <div className="comment-content">
+                  <p>
                   <strong>{comment.user}:</strong> {comment.comment}
+                  </p>
+                  <p>
                   <button
                     className="delete-button"
                     onClick={() => handleDeleteComment(comment.id)}
@@ -152,17 +160,24 @@ const PostDetail = () => {
                   >
                     답글
                   </button>
+                  </p>
                 </div>
                 <ul className="reply-list">
                   {comment.replies.map((reply) => (
                     <li key={reply.id}>
+                      <div className="reply-list-container">
+                      <p>
                       <strong>{reply.user}:</strong> {reply.comment}
+                      </p>
+                      <p>
                       <button
                         className="delete-button"
                         onClick={() => handleDeleteReply(comment.id, reply.id)}
                       >
                         삭제
                       </button>
+                      </p>
+                      </div>
                     </li>
                   ))}
                 </ul>
@@ -172,7 +187,6 @@ const PostDetail = () => {
                     onSubmit={(e) => handleAddReply(e, comment.id)}
                   >
 
-                    <div className="comment-form"></div>
                     <input
                       type="text"
                       value={replyInput}
