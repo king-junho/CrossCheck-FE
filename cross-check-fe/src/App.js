@@ -8,8 +8,12 @@ import Chatbot from './Chatbot/components/Chatbot';
 import Community from './Community/components/Community';
 import History from './History/components/History';
 import LegalService from './LegalService/components/LegalService';
+import ChatRoom from './Chatbot/components/ChatRoom'
 import ChatRoomCreate from './Chatbot/components/ChatRoomCreate';
-import './App.css';
+import Posting from "./Community/components/Posting";
+import PostDetail from "./Community/components/PostDetail";
+import CommunityBoard from "./Community/components/CommunityBoard";
+import "./App.css";
 
 const AppLayout = ({ children }) => {
       return (
@@ -26,6 +30,7 @@ const App = () => {
                   <Routes>
                         {/* Public routes */}
                         <Route path="/" element={<Login />} />
+                        <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
 
                         {/* Protected routes with Sidebar */}
@@ -37,8 +42,11 @@ const App = () => {
                                     </AppLayout>
                               }
                         />
-                        <Route 
-                              path="/chatroomcreate" 
+
+                        <Route path="/chatbot/:chatId" element={<ChatRoom />} />
+
+                        <Route
+                              path="/chatroomcreate"
                               element={
                                     <AppLayout>
                                           <ChatRoomCreate />
@@ -46,23 +54,31 @@ const App = () => {
                               }
                         />
                         <Route
-                              path="/community"
+                              path="/Community"
                               element={
                                     <AppLayout>
                                           <Community />
                                     </AppLayout>
                               }
                         />
+
+                        <Route path="/Posting" element={<Posting />} />
+                        <Route path="/" element={<CommunityBoard />} />
+                        <Route path="/post/:id" element={<PostDetail />} /> {/* 상세 페이지 라우팅 */}
+
                         <Route
-                              path="/history"
+                              path="/History"
                               element={
                                     <AppLayout>
                                           <History />
                                     </AppLayout>
                               }
                         />
+
+                        <Route path="/history" element={<History />} />
+
                         <Route
-                              path="/legal-service"
+                              path="/LegalService"
                               element={
                                     <AppLayout>
                                           <LegalService />
