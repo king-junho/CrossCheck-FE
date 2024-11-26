@@ -54,6 +54,7 @@ const LegalService = () => {
             <img src={goodIcon} alt="Review" />
           </div>
         </div>
+        </div>
 
         {/* Lawyers Section */}
         <div className="lawyers-section">
@@ -78,7 +79,6 @@ const LegalService = () => {
             </button>
           </div>
         </div>
-      </div>
     </div>
   );
 };
