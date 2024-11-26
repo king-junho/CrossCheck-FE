@@ -44,7 +44,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-  margin: 20px 0 40px 0;
+  margin: 40px 0 40px 0;
 }
 
 .service-card {
@@ -61,6 +61,8 @@
 .service-card h3 {
   font-size: 18px;
   font-weight: 800;
+  
+
 }
 
 .service-card img {
@@ -75,9 +77,9 @@
 }
 
 .lawyers-section h2 {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 800;
-  margin: 0 0 50px 50px;
+  margin: 0 0 30px 50px;
 }
 
 .lawyers-slider {
@@ -137,6 +139,30 @@
   opacity: 0.8;
 }
 
+
+.contacts-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.contacts-table th,
+.contacts-table td {
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #ddd; /* 테두리 추가 */
+}
+
+.contacts-table th {
+  background-color: #f4f4f4; /* 헤더 배경색 */
+  font-weight: bold;
+  text-align: center;
+}
+
+.contacts-table td {
+  text-align: center; /* 데이터 중앙 정렬 */
+}
+
 /* Popup Styles */
 .popup-overlay {
   position: fixed;
@@ -151,6 +177,7 @@
   z-index: 1000;
 }
 
+
 .popup {
   background: white;
   padding: 20px;
@@ -159,21 +186,83 @@
   text-align: center;
   position: relative;
 }
+.popup-phone-number {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  text-align: center;
+  position: relative;
+}
 
-.close-btn {
+.reserve-next-btn{
+  margin-top: 50px;
+  width: 80%;
+  background-color: #ff6b81;
+  color: #FFF;
+}
+.reservation-date{
+  font-size: 20px;
+  margin-top: 20px;
+
+}
+.legal-close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0px;
+  right: 0px;
   background: transparent;
   border: none;
-  font-size: 20px;
+  font-size: 12px;
   cursor: pointer;
 }
 
-.popup-step {
+.popup-step-1 {
   margin-top: 20px;
 }
 
+.popup-step-2{
+  margin-top: 20px;
+
+}
+
+
+.popup-step-3{
+  margin-top: 20px;
+
+}
+
+.popup-step-4{
+  margin-top: 20px;
+
+}
+
+
+.contents-step-3{
+  width: 300px;
+  height:100px;
+  font-size: 15px;
+  padding: 8px;
+}
+
+.popup-step-3 h3{
+  margin-top:20px;
+  margin-bottom: 30px;
+
+}
+.popup-step-4 h3{
+  margin-top:20px;
+  margin-bottom: 30px;
+
+}
+
+.popup-step-4 p{
+  width:100%;
+
+}
+
+.button-container-3{
+  width: 100%;
+}
 .contacts-list {
   list-style: none;
   padding: 0;
@@ -198,4 +287,98 @@ button {
 button:disabled {
   background: gray;
   cursor: not-allowed;
+}
+
+.step-2-before{
+  width: 160px;
+  margin-top: 20px;
+}
+
+
+.step-3-before{
+  width: 160px;
+  margin-top: 20px;
+}
+
+.step-2-next{
+  width: 160px;
+  background-color: #ff6b81;
+  color:#fff;
+
+}
+
+.step-3-next{
+  width: 160px;
+  background-color: #ff6b81;
+  color:#fff;
+
+}
+.experts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 한 줄에 2명 */
+  gap: 20px; /* 카드 간격 */
+}
+
+.expert-card {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  text-align: center;
+  padding: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  margin-top: 10px;
+  height: 100px;
+}
+
+.expert-card img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  object-fit: cover;
+}
+
+.expert-card p {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.expert-card.selected {
+  border: 2px solid #ff8fab; /* 선택된 카드 강조 */
+  transform: scale(1.05); /* 선택된 카드 확대 효과 */
+}
+
+.expert-card:hover {
+  transform: scale(1.03); /* 호버 시 확대 효과 */
+}
+
+
+.reservation-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.reservation-table th, .reservation-table td {
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #ddd; /* 테두리 추가 */
+}
+
+.reservation-table th {
+  background-color: #f4f4f4; /* 헤더 배경색 */
+  font-weight: bold;
+  width: 30%; /* 열 비율 조정 */
+}
+
+.reservation-table td {
+  width: 70%;
+  word-break: break-word; /* 텍스트가 길 경우 줄바꿈 */
+}
+
+
+.popup-phone-number h3{
+  margin-top:20px;
 }

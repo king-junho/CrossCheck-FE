@@ -116,22 +116,31 @@ const LegalService = () => {
       {isPopupOpen && (
         <div className="popup-overlay">
           <div className="popup">
-            <button className="close-btn" onClick={handlePopupClose}>X</button>
+            <button className="legal-close-btn" onClick={handlePopupClose}>X</button>
             {step === 1 && (
-              <div className="popup-step">
+              <div className="popup-step-1">
                 <h3>캘린더에서 예약 날짜를 선택하세요</h3>
                 <input
+                className="reservation-date"
                   type="datetime-local"
                   value={appointmentTime}
                   onChange={(e) => setAppointmentTime(e.target.value)}
                 />
-                <button onClick={handleNextStep} disabled={!appointmentTime}>다음</button>
+                <p>
+            <button 
+              className="reserve-next-btn" 
+              onClick={handleNextStep} 
+              disabled={!appointmentTime}
+            >
+              다음
+            </button>
+            </p>
               </div>
             )}
             {step === 2 && (
-              <div className="popup-step">
+              <div className="popup-step-2">
                 <h3>상담할 전문가를 선택하세요</h3>
-                <div className="experts-grid">
+                <div className="experts-grid-2">
                   {lawyers.map((lawyer, index) => (
                     <div
                       key={index}
@@ -143,51 +152,93 @@ const LegalService = () => {
                     </div>
                   ))}
                 </div>
-                <button onClick={handlePreviousStep}>이전</button>
-                <button onClick={handleNextStep} disabled={!selectedExpert}>다음</button>
+                <button
+                className='step-2-before' 
+                onClick={handlePreviousStep}
+                >
+                  이전
+                </button>
+                <button 
+              className='step-2-next' 
+                onClick={handleNextStep} 
+                disabled={!selectedExpert}>다음</button>
               </div>
             )}
             {step === 3 && (
-              <div className="popup-step">
+              <div className="popup-step-3">
                 <h3>상담 내용을 입력하세요</h3>
                 <textarea
+                className="contents-step-3"
                   value={consultationDetails}
                   onChange={(e) => setConsultationDetails(e.target.value)}
                   placeholder="상담 내용을 입력하세요"
                 ></textarea>
-                <button onClick={handlePreviousStep}>이전</button>
-                <button onClick={handleNextStep} disabled={!consultationDetails.trim()}>다음</button>
+                <div className='button-container-3'>
+                <button 
+                className="step-3-before"
+                onClick={handlePreviousStep}>이전</button>
+                <button 
+                className="step-3-next"
+                onClick={handleNextStep} disabled={!consultationDetails.trim()}>다음</button>
+              </div>
               </div>
             )}
-            {step === 4 && (
-              <div className="popup-step">
-                <h3>예약 내용을 확인해주세요</h3>
-                <p>날짜 및 시간: {appointmentTime}</p>
-                <p>전문가: {selectedExpert}</p>
-                <p>상담 내용: {consultationDetails}</p>
-                <button onClick={handlePreviousStep}>이전</button>
-                <button onClick={handleSubmit}>완료</button>
-              </div>
-            )}
+   {step === 4 && (
+  <div className="popup-step-4">
+    <h3>예약 내용을 확인해주세요</h3>
+    <table className="reservation-table">
+      <tbody>
+        <tr>
+          <th>날짜 / 시간</th>
+          <td>{appointmentTime}</td>
+        </tr>
+        <tr>
+          <th>전문가</th>
+          <td>{selectedExpert}</td>
+        </tr>
+        <tr>
+          <th>상담 내용</th>
+          <td>{consultationDetails}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button 
+      className="step-3-before"
+      onClick={handlePreviousStep}>이전</button>
+    <button 
+      className="step-3-next"
+      onClick={handleSubmit}>완료</button>
+  </div>
+)}
+
           </div>
         </div>
       )}
 
       {isContactPopupOpen && (
-        <div className="popup-overlay">
-          <div className="popup">
-            <button className="close-btn" onClick={handleContactPopupClose}>X</button>
-            <h3>법률중개인 연락처</h3>
-            <ul className="contacts-list">
-              {contacts.map((contact, index) => (
-                <li key={index} className="contact-item">
-                  <p>{contact.name}</p>
-                  <p>{contact.phone}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+      <div className="popup-overlay">
+      <div className="popup-phone-number">
+        <button className="legal-close-btn" onClick={handleContactPopupClose}>X</button>
+        <h3>법률중개인 연락처</h3>
+        <table className="contacts-table">
+          <thead>
+            <tr>
+              <th>이름</th>
+              <th>전화번호</th>
+            </tr>
+          </thead>
+          <tbody>
+            {contacts.map((contact, index) => (
+              <tr key={index}>
+                <td>{contact.name}</td>
+                <td>{contact.phone}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
       )}
     </div>
   );
