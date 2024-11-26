@@ -20,7 +20,7 @@ const Sidebar = () => {
             <ul>
               <li 
                 className={`nav-item chatbot ${location.pathname.includes('/Chatbot') ? 'active' : ''}`}
-                onClick={() => navigate(`/Chatbot/${sessionStorage.getItem('currentChatRoomId')}`)}
+                onClick={() => sessionStorage.getItem('currentChatRoomId') === null ? navigate('/Chatbot'):navigate(`/Chatbot/${sessionStorage.getItem('currentChatRoomId')}`)}
               >
                 Chat Bot
               </li>

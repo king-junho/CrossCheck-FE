@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../css/chatRoom.css';
-import Sidebar from '../../Sidebar/components/Sidebar';
+
 
 const ChatRoom = () => {
       const [messages, setMessages] = useState([
@@ -36,6 +36,47 @@ const ChatRoom = () => {
       useEffect(() => {
             scrollToBottom();
       }, [messages]);
+
+      useEffect(()=>{
+            const fetchChatMessages = async() =>{
+                  const chatRoomId = sessionStorage.getItem('currentChatRoomId');
+                  if(!chatRoomId) return;
+
+                  const response = await fetch(`https://qrwrsukdh4.execute-api.ap-northeast-2.amazonaws.com/getDetailedHistory?chatRoomId=${chatRoomId}`,{
+                        method:'GET',
+                        headers :{
+                              'Content-Type':'application/json',
+                        }
+                  });
+                  if (response.ok) {
+                        const data = await response.json();
+                        
+                        // 메시지를 user와 bot 타입으로 저장
+                        const newMessages = data.flatMap(msg => [
+                            {
+                                type: 'user',
+                                content: msg.content
+                            },
+                            {
+                                type: 'bot',
+                                content: msg.claudeResponse
+                            }
+                        ]);
+            
+                        // 상태 업데이트
+                        setMessages(prevMessages => {
+                              // 중복된 메시지를 제거한 새로운 메시지 배열 생성
+                              const uniqueMessages = [...prevMessages, ...newMessages].filter((message, index, self) =>
+                                  index === self.findIndex((m) => m.content === message.content && m.type === message.type)
+                              );
+                              return uniqueMessages;
+                          });
+                    } else {
+                        console.error('Failed to fetch chat messages');
+                    }
+            };
+            fetchChatMessages();
+      },[]);
 
       const convertFileToBase64 = (file) => {
             return new Promise((resolve, reject) => {

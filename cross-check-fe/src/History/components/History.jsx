@@ -31,6 +31,31 @@ const History = () => {
 
     fetchChatHistories();
   }, []);
+  const handleDeleteHistory = async (chatRoomId) => {
+    try{
+      const response = await fetch(`https://qrwrsukdh4.execute-api.ap-northeast-2.amazonaws.com/del_history`,{
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({chatRoomId}),
+      });
+
+      if(!response.ok){
+        throw new Error('Failed to delete chat room');
+      }
+
+      alert('채팅방이 삭제 되었습니다!');
+      setChatHistories((prevHistories)=> prevHistories.filter(chat=>chat.chatRoomId!==chatRoomId));
+    } catch(error){
+      console.error('Error delete chat room: ',error);
+      alert('채팅방 삭제 중 오류 발생');
+    }
+  };
+
+  const handleEditChat = (chatRoomId) => {
+    navigate(`/chatbot/${chatRoomId}`);
+  }
 
   return (
     <div className="history-container">
@@ -62,8 +87,8 @@ const History = () => {
                 <span>{chat.time}</span>
               </div>
               <div className="chat-actions">
-                <button className="edit-button">✏️</button>
-                <button className="delete-button">🗑️</button>
+                <button className="edit-button" onClick={()=>handleEditChat(chat.chatRoomId)}>✏️</button>
+                <button className="delete-button" onClick={()=>handleDeleteHistory(chat.chatRoomId)}>🗑️</button>
               </div>
             </div>
           ))}
