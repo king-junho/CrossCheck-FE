@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import '../css/chatRoomCreate.css';
 import Sidebar from '../../Sidebar/components/Sidebar';
+import { useNavigate } from 'react-router-dom';
 
 const ChatRoomCreate = ({ onCreateRoom }) => {
   const [title, setTitle] = useState('');
   const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   // 컴포넌트 마운트 시 로컬 스토리지에서 userId 불러오기
   useEffect(() => {
@@ -52,6 +54,7 @@ const ChatRoomCreate = ({ onCreateRoom }) => {
 
         alert("채팅방이 성공적으로 생성되었습니다!");
         onCreateRoom(result); // 부모 컴포넌트에 생성된 채팅방 데이터 전달
+        navigate(`/chatbot/${result.chatRoomId}`); // 라우터로 이동
       } else {
         console.error('채팅방 생성 실패:', result.message || response.statusText);
         alert(result.message || '채팅방 생성 중 오류가 발생했습니다.');

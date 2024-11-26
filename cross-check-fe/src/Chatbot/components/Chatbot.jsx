@@ -23,11 +23,7 @@ const Chatbot = () => {
 
   return (
     <div className="chatbot-container">
-      {!roomCreated ? (
         <ChatRoomCreate onCreateRoom={handleCreateRoom} />
-      ) : (
-        <ChatRoom title={roomTitle} />
-      )}
     </div>
   );
 };

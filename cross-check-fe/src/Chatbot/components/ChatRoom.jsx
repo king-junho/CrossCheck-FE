@@ -3,7 +3,6 @@ import '../css/chatRoom.css';
 import Sidebar from '../../Sidebar/components/Sidebar';
 
 const ChatRoom = () => {
-      <Sidebar />
       const [messages, setMessages] = useState([
             {
                   type: 'bot',
@@ -237,6 +236,7 @@ const ChatRoom = () => {
       };
 
       return (
+      <div className="chatbot-container">
             <div className="chat-room">
                   <div className="chat-messages">
                         {messages.map((message, index) => (
@@ -334,6 +334,7 @@ const ChatRoom = () => {
                         </button>
                   </form>
             </div>
+      </div>
       );
 };
 
