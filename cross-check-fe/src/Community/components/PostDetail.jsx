@@ -54,14 +54,20 @@ const PostDetail = () => {
       const [commentInput, setCommentInput] = useState("");
       const [replyInput, setReplyInput] = useState("");
       const [replyTo, setReplyTo] = useState(null);
+      const [liked, setLiked] = useState(false);
 
       if (!post) {
             return <div>해당 게시물을 찾을 수 없습니다.</div>;
       }
-
       const handleLike = () => {
-            setLikes(likes + 1);
+            if (liked) {
+                  setLikes(likes - 1);
+            } else {
+                  setLikes(likes + 1);
+            }
+            setLiked(!liked);
       };
+      
 
       const handleAddComment = (e) => {
             e.preventDefault();
