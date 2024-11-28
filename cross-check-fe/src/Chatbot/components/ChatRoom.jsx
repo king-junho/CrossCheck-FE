@@ -300,103 +300,105 @@ const ChatRoom = () => {
       };
 
       return (
-            <div className="chat-room">
-                  <div className="chat-messages">
-                        {messages.map((message, index) => (
-                              <div key={index} className={`message ${message.type}`}>
-                                    {message.type === 'bot' && (
-                                          <div className="bot-icon">
-                                                <img src="../chatbot-icon.png" alt="Bot" width="22" height="19" />
-                                          </div>
-                                    )}
-                                    <div className="message-content">
-                                          {message.content ? (
-                                                <>
-                                                      {typeof message.content === 'string' ? (
-                                                            message.content.split('\n').map((line, i) => (
-                                                                  <p key={i}>{line}</p>
-                                                            ))
-                                                      ) : (
-                                                            <p>{message.content}</p>
-                                                      )}
-                                                </>
-                                          ) : message.options ? (
-                                                <div className="options-container">
-                                                      {/* 일반 옵션 버튼인 경우 */}
-                                                      {message.options.length === 2 ? (
-                                                            message.options.map((option, idx) => (
-                                                                  <button
-                                                                        key={idx}
-                                                                        className="option-button"
-                                                                        onClick={() => handleOptionClick(option)}
-                                                                  >
-                                                                        {option}
-                                                                  </button>
-                                                            ))
-                                                      ) : (
-                                                            // Document Verification 버튼들인 경우
-                                                            <div className="document-buttons-grid">
-                                                                  {message.options.map((document, idx) => (
+            <div className="chatbot-container">
+                  <div className="chat-room">
+                        <div className="chat-messages">
+                              {messages.map((message, index) => (
+                                    <div key={index} className={`message ${message.type}`}>
+                                          {message.type === 'bot' && (
+                                                <div className="bot-icon">
+                                                      <img src="../chatbot-icon.png" alt="Bot" width="22" height="19" />
+                                                </div>
+                                          )}
+                                          <div className="message-content">
+                                                {message.content ? (
+                                                      <>
+                                                            {typeof message.content === 'string' ? (
+                                                                  message.content.split('\n').map((line, i) => (
+                                                                        <p key={i}>{line}</p>
+                                                                  ))
+                                                            ) : (
+                                                                  <p>{message.content}</p>
+                                                            )}
+                                                      </>
+                                                ) : message.options ? (
+                                                      <div className="options-container">
+                                                            {/* 일반 옵션 버튼인 경우 */}
+                                                            {message.options.length === 2 ? (
+                                                                  message.options.map((option, idx) => (
                                                                         <button
                                                                               key={idx}
-                                                                              className="document-button"
-                                                                              onClick={() => handleDocumentClick(document)}
+                                                                              className="option-button"
+                                                                              onClick={() => handleOptionClick(option)}
                                                                         >
-                                                                              {document}
-                                                                              <p className="document-description">
-                                                                                    {getDocumentDescription(document)}
-                                                                              </p>
+                                                                              {option}
                                                                         </button>
-                                                                  ))}
-                                                            </div>
-                                                      )}
-                                                </div>
-                                          ) : null}
+                                                                  ))
+                                                            ) : (
+                                                                  // Document Verification 버튼들인 경우
+                                                                  <div className="document-buttons-grid">
+                                                                        {message.options.map((document, idx) => (
+                                                                              <button
+                                                                                    key={idx}
+                                                                                    className="document-button"
+                                                                                    onClick={() => handleDocumentClick(document)}
+                                                                              >
+                                                                                    {document}
+                                                                                    <p className="document-description">
+                                                                                          {getDocumentDescription(document)}
+                                                                                    </p>
+                                                                              </button>
+                                                                        ))}
+                                                                  </div>
+                                                            )}
+                                                      </div>
+                                                ) : null}
+                                          </div>
                                     </div>
-                              </div>
-                        ))}
-                        <div ref={messagesEndRef} />
-                  </div>
-                  <form onSubmit={handleSubmit} className="chat-input-wrapper">
-                        <div className="chat-input-container">
-                              <label className="file-upload-button">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                          <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48" stroke="#FF69B4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                    <input
-                                          type="file"
-                                          onChange={handleFileSelect}
-                                          ref={fileInputRef}
-                                          style={{ display: 'none' }}
-                                    />
-                              </label>
-                              <textarea
-                                    value={input}
-                                    onChange={(e) => setInput(e.target.value)}
-                                    onKeyDown={handleKeyPress}
-                                    onCompositionStart={handleComposition}
-                                    onCompositionEnd={handleComposition}
-                                    placeholder="Type the words..."
-                                    className="chat-input"
-                                    rows={1}
-                                    style={{
-                                          resize: 'none',
-                                          minHeight: '40px',
-                                          maxHeight: '120px',
-                                          overflowY: 'auto'
-                                    }}
-                              />
+                              ))}
+                              <div ref={messagesEndRef} />
                         </div>
-                        <button
-                              type="submit"
-                              className={`send-button ${!input.trim() && !selectedFile ? 'disabled' : ''}`}
-                              disabled={!input.trim() && !selectedFile}
-                        >
-                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 20L4 12L12 4L13.425 5.425L7.825 11H20V13H7.825L13.425 18.575L12 20Z" fill="white" transform="rotate(180 12 12)" />
-                              </svg>
-                        </button>
-                  </form>
+                        <form onSubmit={handleSubmit} className="chat-input-wrapper">
+                              <div className="chat-input-container">
+                                    <label className="file-upload-button">
+                                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48" stroke="#FF69B4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                          </svg>
+                                          <input
+                                                type="file"
+                                                onChange={handleFileSelect}
+                                                ref={fileInputRef}
+                                                style={{ display: 'none' }}
+                                          />
+                                    </label>
+                                    <textarea
+                                          value={input}
+                                          onChange={(e) => setInput(e.target.value)}
+                                          onKeyDown={handleKeyPress}
+                                          onCompositionStart={handleComposition}
+                                          onCompositionEnd={handleComposition}
+                                          placeholder="Type the words..."
+                                          className="chat-input"
+                                          rows={1}
+                                          style={{
+                                                resize: 'none',
+                                                minHeight: '40px',
+                                                maxHeight: '120px',
+                                                overflowY: 'auto'
+                                          }}
+                                    />
+                              </div>
+                              <button
+                                    type="submit"
+                                    className={`send-button ${!input.trim() && !selectedFile ? 'disabled' : ''}`}
+                                    disabled={!input.trim() && !selectedFile}
+                              >
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M12 20L4 12L12 4L13.425 5.425L7.825 11H20V13H7.825L13.425 18.575L12 20Z" fill="white" transform="rotate(180 12 12)" />
+                                    </svg>
+                              </button>
+                        </form>
+                  </div>
             </div>
       );
 };
