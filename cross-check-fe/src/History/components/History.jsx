@@ -10,6 +10,7 @@ const History = () => {
   useEffect(() => {
     const fetchChatHistories = async () => {
       try {
+
         const userId = sessionStorage.getItem('userId');
         const response = await fetch(`https://qrwrsukdh4.execute-api.ap-northeast-2.amazonaws.com/getHistory?userId=${userId}`, {
           method: 'GET', // GET 메서드 사용
