@@ -38,6 +38,9 @@ const ChatRoom = () => {
 
       const convertFileToBase64 = (file) => {
             return new Promise((resolve, reject) => {
+                // 파일명의 한글 문자를 안전하게 인코딩
+                const safeFileName = encodeURIComponent(file.name);
+        
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = () => {
@@ -47,12 +50,18 @@ const ChatRoom = () => {
                     }
                     const base64Data = result.split(',')[1];
                     console.log('File converted to Base64:', {
-                        fileName: file.name,
+                        fileName: safeFileName, // 인코딩된 파일명 사용
+                        fileOriginalName: file.name, // 원본 파일명도 로깅
                         fileType: file.type,
                         fileSize: file.size,
                         base64Length: base64Data.length
                     });
-                    resolve(base64Data);
+                    
+                    // 메타데이터에 안전한 파일명 전달
+                    resolve({
+                        base64Data: base64Data,
+                        fileName: safeFileName
+                    });
                 };
                 reader.onerror = (error) => reject(error);
             });
@@ -61,38 +70,41 @@ const ChatRoom = () => {
       const sendToApiGateway = async (payload) => {
             const url = 'https://qrwrsukdh4.execute-api.ap-northeast-2.amazonaws.com/send_message';
             try {
-                  console.log('Sending payload to API Gateway:', {
-                        payloadType: payload.type,
-                        hasFile: !!payload.file,
-                        fileName: payload.fileName,
-                        contentLength: payload.content?.length || 0
-                  });
-
-                  const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload),
-                  });
-                  
-                  if (!response.ok) {
-                        const errorData = await response.json();
-                        console.error('Server Error:', errorData);
-                        throw new Error('Server Error');
-                  }
-                  
-                  const responseData = await response.json();
-                  console.log('API Gateway Response:', {
-                        status: response.status,
-                        responseType: typeof responseData,
-                        claudeResponseLength: responseData.claudeResponse?.length || 0
-                  });
-                  
-                  return responseData;
+                console.log('Sending payload to API Gateway:', {
+                    payloadType: payload.type,
+                    hasFile: !!payload.file,
+                    fileName: payload.fileName, // 인코딩된 파일명 사용
+                    contentLength: payload.content?.length || 0
+                });
+        
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        ...payload,
+                        fileName: payload.fileName // 인코딩된 파일명 전달
+                    }),
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Server Error:', errorData);
+                    throw new Error('Server Error');
+                }
+                
+                const responseData = await response.json();
+                console.log('API Gateway Response:', {
+                    status: response.status,
+                    responseType: typeof responseData,
+                    claudeResponseLength: responseData.claudeResponse?.length || 0
+                });
+                
+                return responseData;
             } catch (error) {
-                  console.error('Communication error:', error.message);
-                  console.error('Payload size:', JSON.stringify(payload).length, 'bytes');
-                  console.error('Payload details:', payload);
-                  throw error;
+                console.error('Communication error:', error.message);
+                console.error('Payload size:', JSON.stringify(payload).length, 'bytes');
+                console.error('Payload details:', payload);
+                throw error;
             }
       };
 
@@ -164,8 +176,8 @@ const ChatRoom = () => {
                         chatRoomId: sessionStorage.getItem('currentChatRoomId'),
                         content: input.trim(),
                         type: selectedFile ? 'file' : 'text',
-                        file: fileData,
-                        fileName: selectedFile?.name,
+                        file: fileData?.base64Data, // base64Data 직접 전달
+                        fileName: fileData?.fileName, // 인코딩된 파일명 전달
                         rentalInfo
                   };
 
@@ -185,8 +197,8 @@ const ChatRoom = () => {
                             chatRoomId: sessionStorage.getItem('currentChatRoomId'),
                             content: input.trim(),
                             type: selectedFile ? 'file' : 'text',
-                            file: fileData,
-                            fileName: selectedFile?.name,
+                            file: fileData?.base64Data, // base64Data 직접 전달
+                            fileName: fileData?.fileName, // 인코딩된 파일명 전달
                         };
                 
                         console.log('Sending payload:', payload);
@@ -240,7 +252,7 @@ const ChatRoom = () => {
                 }
         
                 setSelectedFile(file);
-                setInput(prev => prev + ` [File: ${file.name}]`);
+                setInput(prev => prev + ` [File: ${file.name}] Upload`);
             }
         };
 
