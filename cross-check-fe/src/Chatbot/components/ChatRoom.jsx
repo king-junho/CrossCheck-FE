@@ -25,6 +25,7 @@ const ChatRoom = () => {
             landlordIdNumber: '',
             landlordResidence: '',
         });
+      const [isComposing, setIsComposing] = useState(false);
       const messagesEndRef = useRef(null);
       const fileInputRef = useRef(null);
 
@@ -35,6 +36,14 @@ const ChatRoom = () => {
       useEffect(() => {
             scrollToBottom();
       }, [messages]);
+
+      const handleComposition = (event) => {
+            if (event.type === 'compositionstart') {
+                  setIsComposing(true); // IME 입력 시작
+            } else if (event.type === 'compositionend') {
+                  setIsComposing(false); // IME 입력 완료
+            }
+      };
 
       const convertFileToBase64 = (file) => {
             return new Promise((resolve, reject) => {
@@ -223,10 +232,10 @@ const ChatRoom = () => {
       };
 
       const handleKeyPress = (e) => {
-            if (e.key === 'Enter') {
+            if (e.key === 'Enter' && !isComposing) { // IME 입력 중이 아닐 때만 처리
                   if (!e.shiftKey) {
-                        e.preventDefault();
-                        handleSendMessage();
+                      e.preventDefault();
+                      handleSendMessage();
                   }
             }
       };
@@ -365,6 +374,8 @@ const ChatRoom = () => {
                                     value={input}
                                     onChange={(e) => setInput(e.target.value)}
                                     onKeyDown={handleKeyPress}
+                                    onCompositionStart={handleComposition}
+                                    onCompositionEnd={handleComposition}
                                     placeholder="Type the words..."
                                     className="chat-input"
                                     rows={1}
