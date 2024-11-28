@@ -1,32 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../../Sidebar/components/Sidebar';
 import { useNavigate } from 'react-router-dom';
 import '../css/history.css';
 
 const History = () => {
   const navigate = useNavigate();
+  const [chatHistories, setChatHistories] = useState([]);
 
-  const chatHistories = [
-    { title: '전세를 위해 필요한 서류', time: '1시간 전' },
-    { title: '전세사기 대처방법', time: '3일 전' },
-    { title: '부동산 계약할 때 유의사항', time: '17일 전' },
-    { title: '공인중개사가 되는 방법', time: '1달 전' }
-  ];
+  useEffect(() => {
+    const fetchChatHistories = async () => {
+      try {
+        const userId = "seungho0873";
+        const response = await fetch(`https://qrwrsukdh4.execute-api.ap-northeast-2.amazonaws.com/getHistory?userId=${encodeURIComponent(userId)}`, {
+          method: 'GET', // GET 메서드 사용
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
 
-  const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태 관리
-  const [filteredChats, setFilteredChats] = useState(chatHistories); // 필터된 히스토리 관리
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
 
-  // 검색어 변경 핸들러
-  const handleSearchChange = (e) => {
-    const searchValue = e.target.value.toLowerCase(); // 소문자로 변환
-    setSearchTerm(searchValue);
+        const data = await response.json();
+        setChatHistories(data); // 가져온 데이터 설정
+      } catch (error) {
+        console.error('Error fetching chat histories:', error);
+      }
+    };
 
-    // 검색어에 따라 히스토리 필터링
-    const filtered = chatHistories.filter((chat) =>
-      chat.title.toLowerCase().includes(searchValue) // 검색어가 포함된 항목 필터링
-    );
-    setFilteredChats(filtered);
+    fetchChatHistories();
+  }, []);
+  const handleDeleteHistory = async (chatRoomId) => {
+    try{
+      const response = await fetch(`https://qrwrsukdh4.execute-api.ap-northeast-2.amazonaws.com/del_history`,{
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({chatRoomId}),
+      });
+
+      if(!response.ok){
+        throw new Error('Failed to delete chat room');
+      }
+
+      alert('채팅방이 삭제 되었습니다!');
+      setChatHistories((prevHistories)=> prevHistories.filter(chat=>chat.chatRoomId!==chatRoomId));
+    } catch(error){
+      console.error('Error delete chat room: ',error);
+      alert('채팅방 삭제 중 오류 발생');
+    }
   };
+
+  const handleEditChat = (chatRoomId) => {
+    navigate(`/chatbot/${chatRoomId}`);
+  }
 
   return (
     <div className="history-container">
@@ -42,33 +71,27 @@ const History = () => {
         <div className="search-container">
           <div className="search-box">
             <span className="search-icon">🔍</span>
-            <input
-              type="text"
+            <input 
+              type="text" 
               placeholder="Search your chat"
               className="search-input"
-              value={searchTerm} // 검색어 상태 바인딩
-              onChange={handleSearchChange} // 검색어 변경 이벤트 핸들러
             />
           </div>
         </div>
 
         <div className="chat-history-list">
-          {filteredChats.length > 0 ? (
-            filteredChats.map((chat, index) => (
-              <div key={index} className="chat-history-item">
-                <div className="chat-info">
-                  <h3>{chat.title}</h3>
-                  <span>{chat.time}</span>
-                </div>
-                <div className="chat-actions">
-                  <button className="edit-button">✏️</button>
-                  <button className="delete-button">🗑️</button>
-                </div>
+          {chatHistories.map((chat, index) => (
+            <div key={index} className="chat-history-item">
+              <div className="chat-info">
+                <h3>{chat.title}</h3>
+                <span>{chat.time}</span>
               </div>
-            ))
-          ) : (
-            <p className="no-results">No results found.</p>
-          )}
+              <div className="chat-actions">
+                <button className="edit-button" onClick={()=>handleEditChat(chat.chatRoomId)}>✏️</button>
+                <button className="delete-button" onClick={()=>handleDeleteHistory(chat.chatRoomId)}>🗑️</button>
+              </div>
+            </div>
+          ))}
         </div>
       </main>
     </div>
